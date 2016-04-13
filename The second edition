@@ -73,7 +73,7 @@ int main()
 			}
 		}
 		//临时数组显示
-		cout<<k<< ":临时数组为：" << endl;
+		cout<<k+1<< ":临时数组为：" << endl;
 		for(i=0;i<num;i++)
 		{
 			cout<<temp[i]<<" ";
@@ -94,7 +94,7 @@ int main()
 		}
 		result[k]=middle[0];
 		cout<<"临时存放最大子数组和为： "<<endl;
-		for(i=0;i<j;i++)
+		for(i=0;i<j+1;i++)
 		{
 			cout << middle[i] << "  ";
 			if(middle[i]>result[k])
