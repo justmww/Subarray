@@ -1,0 +1,127 @@
+//最大子数组的和（相邻且首尾相连）
+//20143066毛雯雯，2016.4.11
+#include<iostream>
+#include<cstdlib>
+#include <new> 
+#include<ctime>
+#define N 100
+using namespace std;
+int main()
+{
+	int i;//循环变量
+	srand(unsigned(time(0)));
+	
+	int num;
+	num = rand()%10+1;//随机数的个数
+	cout<<"产生一个有"<<num <<"个数的数组"<<endl;
+
+	int *initial;//初始数组
+	initial= new  int[num]; //动态申请空间
+	
+	int r;//random，随机确定正数或负数
+	for(i=0;i<num;i++)//初始数组的赋值
+	{
+		r = rand()%2;
+		if(r==1)
+		{
+			initial[i] = rand()%100+1;
+		}
+		if(r==0)
+		{
+			initial[i] = 0 - (rand()%100+1);
+		}
+	}
+
+	cout<< "产生的数组为： " <<endl;
+	for(i=0;i<num;i++)//初始数组的显示，用来检查
+	{
+		cout<<initial[i]<<"  ";
+	}
+	cout << endl;
+
+	int middle[N*N],result[N*N];//middle数组是存放一次循环的结果的，result数组是放一次循环后的最大的值的
+	int j ;
+	int k;
+	int q;
+	int s;
+	int *temp;
+	temp= new  int[num];//temp数组临时存放数组——把初始数组的每一个分别看成第一个
+	
+
+	for(i=0;i<N*N;i++)//初始化
+	{
+		middle[i]=0;
+		result[i]=0;
+	}
+	
+	for(k=0;k<num;k++)//把每个数当作第一个
+	{
+		for(i=0;i<num-k;i++)
+		{
+			temp[i]=initial[i+k];
+		}
+		if(k!=0)
+		{
+			s=0;
+			for(i=num-k;i<num;i++)
+			{
+				if(s<k)
+				{
+					temp[i]=initial[s];
+					s++;
+				}
+			}
+		}
+		//临时数组显示
+		cout<<k<< ":临时数组为：" << endl;
+		for(i=0;i<num;i++)
+		{
+			cout<<temp[i]<<" ";
+		}
+		cout << endl;
+
+		j=0;
+		for(i=0;i<num;i++)
+		{
+			if(temp[i]>0)
+			{
+				middle[j]=temp[i]+middle[j];
+			}
+			else
+			{
+				j++;	
+			}
+		}
+		result[k]=middle[0];
+		cout<<"临时存放最大子数组和为： "<<endl;
+		for(i=0;i<j;i++)
+		{
+			cout << middle[i] << "  ";
+			if(middle[i]>result[k])
+			{
+				result[k] = middle[i];
+			}
+		}
+		cout << endl;
+		for(i=0;i<N*N;i++)
+		{
+			middle[i]=0;
+		}
+	}
+
+	int final=result[0];
+	for(i=0;i<num;i++)//得最后的结果
+	{
+		if(final<result[i])
+		{
+			final = result[i];
+		}
+	}
+	if(final==0)
+		cout<<"为负数数组，不计算"<<endl;
+	else
+		cout << "最大子数组的和为：" << final;
+
+	delete[ ] initial; //释放动态申请空间
+	delete[ ] temp; 
+}
